@@ -42,7 +42,6 @@ navigation.addEventListener("navigate", (navigateEvent) => {
 	if (shouldNotIntercept(navigateEvent)) {
 		return;
 	}
-
 	const url = new URL(navigateEvent.destination.url);
 	navigateEvent.intercept({
 		handler() {
@@ -50,4 +49,4 @@ navigation.addEventListener("navigate", (navigateEvent) => {
 		},
 	});
 });
-loadRoute();
+loadRoute(window.location);

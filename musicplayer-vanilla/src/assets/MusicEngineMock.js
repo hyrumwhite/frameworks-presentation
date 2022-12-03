@@ -39,6 +39,8 @@ export default {
 					return albumArt(this.name);
 				},
 				songs: songs,
+				songCount: songs.length,
+				length: 720000,
 			},
 		];
 	},
@@ -51,6 +53,7 @@ export default {
 				id: "poiu765",
 				name: "Workout Mix",
 				songs,
+				songCount: songs.length,
 			},
 		];
 	},
