@@ -20,7 +20,6 @@ customElements.define(
 			`;
 		}
 		connectedCallback() {
-			console.log(this.children);
 			this.render();
 		}
 	},

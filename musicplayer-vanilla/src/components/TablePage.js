@@ -40,8 +40,7 @@ customElements.define(
 				th.classList.add("text-left", "font-bold", "pr-2");
 				if (index === 0) {
 					th.classList.add("pr-2", "pl-4");
-				}
-				if (index === headers.length - 1) {
+				} else if (index === headers.length - 1) {
 					th.classList.add("pr-4", "pl-2");
 				} else {
 					th.classList.add("px-2");
@@ -68,7 +67,7 @@ customElements.define(
 			let tableBody = this.shadowRoot.querySelector("tbody");
 			//brute forcing lists like this is very inefficient
 			tableBody.innerHTML = "";
-			console.log(this.headers, items);
+			let rowIndex = 0;
 			for (let item of items) {
 				let tr = document.createElement("tr");
 				tr.classList.add("cursor-pointer", "rounded-md", "group/row");
@@ -88,15 +87,15 @@ customElements.define(
 					} else {
 						td.classList.add("px-2");
 					}
-					console.log(item, header.value);
 					const slot = document.createElement("slot");
-					slot.name = `td_${header.value}`;
+					slot.name = `td_${header.value}_${rowIndex}`;
 					slot.textContent = item[header.value];
 					td.appendChild(slot);
 					tr.appendChild(td);
 					index += 1;
 				}
 				tableBody.appendChild(tr);
+				rowIndex += 1;
 			}
 		}
 		set items(items) {

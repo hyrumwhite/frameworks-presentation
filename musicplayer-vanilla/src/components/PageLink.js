@@ -12,13 +12,13 @@ customElements.define(
 		disconnectedCallback() {
 			window.removeEventListener("popstate", this.checkActive);
 		}
-		checkActive() {
+		checkActive = () => {
 			if (window.location.href === this.href) {
 				this.classList?.add("bg-zinc-700/50");
 			} else {
 				this.classList?.remove("bg-zinc-700/50");
 			}
-		}
+		};
 	},
 	{ extends: "a" }
 );
