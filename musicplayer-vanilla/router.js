@@ -37,16 +37,19 @@ function shouldNotIntercept(navigationEvent) {
 	);
 }
 
-navigation.addEventListener("navigate", (navigateEvent) => {
-	// Exit early if this navigation shouldn't be intercepted.
-	if (shouldNotIntercept(navigateEvent)) {
-		return;
-	}
-	const url = new URL(navigateEvent.destination.url);
-	navigateEvent.intercept({
-		handler() {
-			loadRoute(url);
-		},
+//allows fallback for browsers that don't support the nav event
+if ("navigation" in window) {
+	navigation.addEventListener("navigate", (navigateEvent) => {
+		// Exit early if this navigation shouldn't be intercepted.
+		if (shouldNotIntercept(navigateEvent)) {
+			return;
+		}
+		const url = new URL(navigateEvent.destination.url);
+		navigateEvent.intercept({
+			handler() {
+				loadRoute(url);
+			},
+		});
 	});
-});
+}
 loadRoute(window.location);
