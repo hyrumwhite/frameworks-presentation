@@ -1,4 +1,7 @@
 import { hackyStyleSheet } from "./tw.js";
+import TablePageTh from "./TablePageTh.js";
+import TablePageRow from "./TablePageRow.js";
+
 const name = "table-page";
 export default name;
 const h1Slot = "h1";
@@ -34,20 +37,10 @@ customElements.define(
 			const headerRow = this.shadowRoot.querySelector("thead tr");
 			//brute forcing lists like this is very inefficient
 			headerRow.innerHTML = "";
-			let index = 0;
 			for (let header of headers) {
-				const th = document.createElement("th");
-				th.classList.add("text-left", "font-bold", "pr-2");
-				if (index === 0) {
-					th.classList.add("pr-2", "pl-4");
-				} else if (index === headers.length - 1) {
-					th.classList.add("pr-4", "pl-2");
-				} else {
-					th.classList.add("px-2");
-				}
+				const th = document.createElement("th", { is: TablePageTh });
 				th.textContent = header.text;
 				headerRow.appendChild(th);
-				index += 1;
 			}
 		}
 		set headers(headers) {
@@ -67,35 +60,11 @@ customElements.define(
 			let tableBody = this.shadowRoot.querySelector("tbody");
 			//brute forcing lists like this is very inefficient
 			tableBody.innerHTML = "";
-			let rowIndex = 0;
 			for (let item of items) {
-				let tr = document.createElement("tr");
-				tr.classList.add("cursor-pointer", "rounded-md", "group/row");
-				let index = 0;
-				for (let header of this.headers) {
-					let td = document.createElement("td");
-					td.classList.add(
-						"text-left",
-						"py-2",
-						"text-xl",
-						"group-hover/row:bg-zinc-900"
-					);
-					if (index === 0) {
-						td.classList.add("pl-4", "pr-2", "rounded-l-full");
-					} else if (index === this.headers.length - 1) {
-						td.classList.add("pl-2", "pr-4", "rounded-r-full");
-					} else {
-						td.classList.add("px-2");
-					}
-					const slot = document.createElement("slot");
-					slot.name = `td_${header.value}_${rowIndex}`;
-					slot.textContent = item[header.value];
-					td.appendChild(slot);
-					tr.appendChild(td);
-					index += 1;
-				}
+				let tr = document.createElement("tr", { is: TablePageRow });
+				tr.headers = this.headers;
+				tr.item = item;
 				tableBody.appendChild(tr);
-				rowIndex += 1;
 			}
 		}
 		set items(items) {
