@@ -1,17 +1,20 @@
 <script>
 	import TablePage from "./TablePage.svelte";
-	import { useMusicStore } from "../composables/useMusicStore.js";
-	//if going non-pinia route, store variables must be exposed in the setup function
+	import { onDestroy } from "svelte";
+	import { playlists, getPlaylists } from "../assets/musicStore.js";
 
-	const { playlists, getPlaylists } = useMusicStore();
+	let playlistsList = [];
+	const unsubscribe = playlists.subscribe((value) => (playlistsList = value));
+	onDestroy(unsubscribe);
 	getPlaylists();
+
 	const headers = [
 		{ text: "Name", value: "name" },
 		{ text: "Song Count", value: "songs" },
 	];
 </script>
 
-<TablePage items={playlists} {headers}>
+<TablePage items={playlistsList} {headers}>
 	<template slot="h1">Playlists</template>
 	<template slot="td_songs" let:value>{value.length}</template>
 </TablePage>

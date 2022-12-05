@@ -23,19 +23,19 @@ export const useMusicStore = () => {
 	 * @returns {Promise<Song[]>}
 	 */
 	const getSongs = async () => {
-		songs.value = await musicService.getSongs();
+		return (songs.value = await musicService.getSongs());
 	};
 	/**
 	 * @returns {Promise<Album[]>}
 	 */
 	const getAlbums = async () => {
-		albums.value = await musicService.getAlbums();
+		return (albums.value = await musicService.getAlbums());
 	};
 	/**
 	 * @returns {Promise<Playlist[]>}
 	 */
 	const getPlaylists = async () => {
-		playlists.value = await musicService.getPlaylists();
+		return (playlists.value = await musicService.getPlaylists());
 	};
 	return { songs, albums, playlists, getSongs, getAlbums, getPlaylists };
 };

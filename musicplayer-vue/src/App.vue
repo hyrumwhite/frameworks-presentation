@@ -1,12 +1,10 @@
 <script setup>
 import Sidebar from "./components/Sidebar.vue";
-import TopMenu from "./components/TopMenu.vue";
 import PageLink from "./components/PageLink.vue";
 </script>
 
 <template>
 	<div class="flex-1 flex flex-col dark:bg-zinc-900 dark:text-blue-50">
-		<TopMenu />
 		<div class="flex flex-1">
 			<Sidebar>
 				<nav class="flex flex-col gap-2 p-2">
