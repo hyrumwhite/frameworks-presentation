@@ -35,7 +35,14 @@
 								"px-2"
 							}`}
 						>
-							{item[header.value]}
+							{#if header.component}
+								<svelte:component
+									this={header.component}
+									value={item[header.value]}
+								/>
+							{:else}
+								{item[header.value]}
+							{/if}
 						</td>
 					{/each}
 				</tr>

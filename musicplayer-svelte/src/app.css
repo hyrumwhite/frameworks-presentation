@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html,
+body,
+#app {
+	margin: 0px;
+	height: 100%;
+	width: 100%;
+}
+
+span.page-link a {
+	@apply p-3 text-xl text-zinc-50/80 rounded-md hover:bg-zinc-700/70 flex items-center transition-colors;
+}
+span.page-link.active a {
+	@apply bg-zinc-700/50;
+}

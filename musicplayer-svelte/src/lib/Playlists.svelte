@@ -1,8 +1,11 @@
 <script>
 	import TablePage from "./TablePage.svelte";
+	import SongCount from "./SongCount.svelte";
+	import SongsLength from "./SongsLength.svelte";
 	import { onDestroy } from "svelte";
 	import { playlists, getPlaylists } from "../assets/musicStore.js";
-
+	export let currentRoute;
+	export let params;
 	let playlistsList = [];
 	const unsubscribe = playlists.subscribe((value) => (playlistsList = value));
 	onDestroy(unsubscribe);
@@ -10,11 +13,11 @@
 
 	const headers = [
 		{ text: "Name", value: "name" },
-		{ text: "Song Count", value: "songs" },
+		{ text: "Songs", value: "songs", component: SongCount },
+		{ text: "Length", value: "songs", component: SongsLength },
 	];
 </script>
 
 <TablePage items={playlistsList} {headers}>
-	<template slot="h1">Playlists</template>
-	<template slot="td_songs" let:value>{value.length}</template>
+	<span slot="h1">Playlists</span>
 </TablePage>

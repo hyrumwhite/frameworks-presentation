@@ -1,18 +1,23 @@
 <script>
+	import { routeIsActive } from "svelte-router-spa";
 	import { Navigate } from "svelte-router-spa";
 	export let to = "";
+	let isActive = routeIsActive(to);
+	const setIsActive = () => (isActive = location.pathname === to);
+	const handleClick = () => {
+		window.setTimeout(() => {
+			window.dispatchEvent(new CustomEvent("popstate"));
+		}, 80);
+	};
 </script>
 
+<svelte:window on:popstate={setIsActive} on:popstate={setIsActive} />
+
 <span
-	class="
-		p-3
-		text-xl text-zinc-50/80
-		rounded-md
-		hover:bg-zinc-700/70
-		flex
-		items-center
-		transition-colors
-	"
+	class="page-link"
+	class:active={isActive}
+	on:mousedown={handleClick}
+	on:keydown={handleClick}
 >
 	<Navigate {to}><slot /></Navigate>
 </span>
