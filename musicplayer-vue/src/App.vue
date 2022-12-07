@@ -19,5 +19,3 @@ import PageLink from "./components/PageLink.vue";
 		</div>
 	</div>
 </template>
-
-<style scoped></style>

@@ -1,9 +1,13 @@
+// How to use tailwind in the Shadow DOM, just clone the TW stylesheet, nbd, right?
 import { hackyStyleSheet } from "./tw.js";
+
+// Goal was to avoid document.createElement chains. They're hard to read and maintain
 import TablePageTh from "./TablePageTh.js";
 import TablePageRow from "./TablePageRow.js";
 
 const name = "table-page";
 export default name;
+
 const h1Slot = "h1";
 export const slots = { h1: `slot="${h1Slot}"` };
 
@@ -35,14 +39,19 @@ customElements.define(
 		}
 		addTableHeaders(headers) {
 			const headerRow = this.shadowRoot.querySelector("thead tr");
-			//brute forcing lists like this is very inefficient
+			// Our first ding against the no-framework approach. List rendering.
+			// This is the most inneficient approach. We could write a faster way, but you get that for free with frameworks!
+			// Really the first ding is variable binding <div>Hello {{msg}}</div>
+			// Similar issue, where here you'd need to do something more complex
 			headerRow.innerHTML = "";
 			for (let header of headers) {
+				// Creating an extended 'th'
 				const th = document.createElement("th", { is: TablePageTh });
 				th.textContent = header.text;
 				headerRow.appendChild(th);
 			}
 		}
+		//using setter and getter props to react to data. Can also react to attributes, but they can only handle strings
 		set headers(headers) {
 			this._headers = headers;
 			this.addTableHeaders(headers);
@@ -61,7 +70,9 @@ customElements.define(
 			//brute forcing lists like this is very inefficient
 			tableBody.innerHTML = "";
 			for (let item of items) {
+				// more extended components
 				let tr = document.createElement("tr", { is: TablePageRow });
+				// more setters and getters
 				tr.headers = this.headers;
 				tr.item = item;
 				tableBody.appendChild(tr);
